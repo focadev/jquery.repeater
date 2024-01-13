@@ -275,6 +275,19 @@ $.fn.repeater = function (fig) {
             foreach(rows, addItem);
         };
 
+        reset = function (initEmpty) {
+            $items().remove();
+
+            if (initEmpty) {
+                return;
+            }
+
+            var $item = $itemTemplate.clone();
+            $(this).find('[data-repeater-list]').append($item.show());
+            $.fn.repeater = {};
+        };
+
+
         $filterNested($self.find('[data-repeater-create]'), fig.repeaters).click(function () {
             addItem();
         });
@@ -289,9 +302,12 @@ $.fn.repeater = function (fig) {
     });
 
     this.setList = setList;
-
     this.addItem = addItem;
+    this.destroy = destroy;
 
+    this.UpdateConfig = function (configs) {
+        Object.assign(fig, configs);
+    }
 
     this.removeItem = function (item) {
         hide.call(item, function () {
