@@ -295,7 +295,6 @@ $.fn.repeater = function (fig) {
             $items().remove();
             var $item = $itemTemplate.clone();
             $(this).find('[data-repeater-list]').append($item.show());
-            $.fn.repeater = {};
         };
 
 
