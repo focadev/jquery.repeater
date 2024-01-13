@@ -77,6 +77,7 @@ $.fn.repeater = function (fig) {
     var $items;
     var hide;
     var setIndexes;
+    var destroy;
 
     $(this).each(function () {
 
@@ -275,7 +276,7 @@ $.fn.repeater = function (fig) {
             foreach(rows, addItem);
         };
 
-        reset = function (initEmpty) {
+        destroy = function (initEmpty) {
             $items().remove();
 
             if (initEmpty) {
