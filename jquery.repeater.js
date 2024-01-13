@@ -946,6 +946,7 @@ $.fn.repeater = function (fig) {
     var $items;
     var hide;
     var setIndexes;
+    var reset;
     var destroy;
 
     $(this).each(function () {
@@ -1145,13 +1146,22 @@ $.fn.repeater = function (fig) {
             foreach(rows, addItem);
         };
 
-        destroy = function (initEmpty) {
-            $items().remove();
+        reset = function (initEmpty) {
+            const items = $filterNested($list.find('[data-repeater-item]'), fig.repeaters).toArray();
 
-            if (initEmpty) {
-                return;
+            if (!fig.initEmpty) {
+                items.shift()
             }
 
+            items.forEach(function (item) {
+                $(item).remove();
+                setIndexes($items(), getGroupName(), fig.repeaters);
+            })
+
+        };
+
+        destroy = function (initEmpty) {
+            $items().remove();
             var $item = $itemTemplate.clone();
             $(this).find('[data-repeater-list]').append($item.show());
             $.fn.repeater = {};
@@ -1173,7 +1183,9 @@ $.fn.repeater = function (fig) {
 
     this.setList = setList;
     this.addItem = addItem;
+    this.reset = reset;
     this.destroy = destroy;
+
 
     this.UpdateConfig = function (configs) {
         Object.assign(fig, configs);
